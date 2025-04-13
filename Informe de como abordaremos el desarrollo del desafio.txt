@@ -1,0 +1,59 @@
+﻿Informe de como abordaremos el desarrollo del desafio.
+
+
+Integrantes:
+Oscar Daniel Yepez Amin - CC. 1007439868
+Jose Eduardo Valverde Alvarez  - CC 1064187965.
+
+
+Introducción (Lo que entendemos que debemos hacer.)
+
+
+Bueno, mi gente, la gente del pueblo, en este informe les contamos cómo vamos a enfrentar el desafío de Informática II. Se comprende que la idea principal es reconstruir, transformar o bien cambiar, una imagen original que se ha visto alterada por varias transformaciones a nivel de bits, con los conocimientos que hemos aprendido hasta ahora en las dos unidades:
+
+
+* Unidad 1: Introducción al lenguaje C++
+* Unidad 2: Manejo de memoria y gestión de datos
+
+
+Con lo que hemos visto, vamos a armar una estrategia paso a paso, desde la comprensión del problema hasta la implementación en C++, para lograr resolver este desafío planteado.
+
+
+Análisis del desafío. (Problemática)
+
+
+Como primer paso, leemos detalladamente las especificaciones del desafío. Entre los datos importantes están:
+
+
+Una imagen final (ID) que ha pasado por varias operaciones (XOR, rotación y desplazamientos a nivel de bits) y además se le aplicó un enmascaramiento con una máscara M.
+
+
+* Nos suministran algunos códigos base para abrir archivos BMP y para trabajar con arreglos dinámicos, lo que nos ayudará bastante, para la resolución del desafío.
+* Por medio de los archivos de rastreo generados (los .txt) buscaremos, qué operaciones fueron aplicadas y en qué orden, para luego revertir esos pasos.
+
+
+Como ejecutaremos el desarrollo del ejercicio.
+Vamos a seguir los siguientes pasos para el desarrollo. (Puede cambiar conforme avancemos)
+Comprensión y Diseño del Problema
+1. Lectura y análisis de los requerimientos: Revisaremos el documento del desafío para entender cada parte, desde la operación XOR hasta el enmascaramiento. Buscaremos evaluar cómo se ha modificado la imagen y la manera de recuperar la originalidad de la imagen.
+
+2. Diseño preliminar del algoritmo: Bosquejaremos un diagrama de flujo o un esquema en papel para definir las tareas principales:
+
+   * Implementar funciones para operaciones a nivel de bits (XOR, desplazamiento y rotación).
+   * Hacer pruebas con estas funciones para asegurarnos de que se comportan como esperamos.
+   * Verificar, con base en los archivos de resultados, que el enmascaramiento se haya aplicado correctamente.
+   * Construir un algoritmo que identifique la secuencia de operaciones aplicadas.
+
+
+   3. Desarrollo y Experimentación
+   * Implementación de Funciones Básicas: Escribiremos las funciones en C++ para que puedan realizar operaciones XOR entre dos valores o partes de la imagen, desplazar y rotar bits, teniendo en cuenta el máximo de 8 bits a mover.
+   * Gestión de Memoria y Arreglos Dinámicos: Se manejará la memoria de forma dinámica usando punteros y arreglos, como la reserva de memoria para almacenar los datos de la imagen, también buscaremos implementar algoritmos que nos permita la lectura y escritura de archivos BMP para poder acceder a los píxeles y ya por último se entiende que con el código que nos proporcionan administrar los archivos de rastreo para obtener las sumas de enmascaramiento y demás datos, a esto también le añadiremos nuestra lógica.
+   * Validación del Enmascaramiento:  Crearemos funciones que verifiquen el resultado del enmascaramiento comparando la imagen transformada con la máscara y con los datos de los archivos .txt. Para ver si confirmamos que las operaciones intermedias se están haciendo bien.
+   * Reconstrucción de la Imagen Original:  Ya por último se entendería que el algoritmo debe ser capaz de deducir el orden de las operaciones y, a partir de ello, revertir cada paso para reconstruir la imagen original.
+   4. Pruebas y Validaciones: Realizaremos pruebas con los conjuntos de datos proporcionados (por ejemplo, el Caso 1), también buscaremos ir documentando cada experimento, señalando qué parte nos logra funcionar y qué se tuvo que corregir
+Consideraciones finales.
+Sabemos que el desafío no está fácil y pues tiene su complejidad, puesto que implica, cierta cantidad de tiempo para poder resolverlo y además buscar deducir el orden y el tipo de operaciones aplicadas con los archivos que nos brindan, esto bajo el manejo correcto de memoria, evitando las famosas fugas o errores de acceso, que se pueden generar al hacer uso del manejo de memoria.
+Lo vemos de la siguiente forma: 
+   * Analizar bien el problema o problemática que nos plantean en el desafío y lograr definir la estrategia mediante diagramas de flujo y esquemas, para lograr del desacatamiento por así decirlo
+   * Lograr implementar funciones básicas para operaciones a nivel de bits hasta un algoritmo complejo que permita revertir las transformaciones.
+   * Evaluar cada paso con pruebas y compararlo con la prueba que nos brindan los archivos de enmascaramiento.
