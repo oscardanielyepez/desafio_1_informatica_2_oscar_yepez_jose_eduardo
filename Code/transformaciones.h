@@ -1,5 +1,3 @@
-#ifndef TRANSFORMACI_N_H
-#define TRANSFORMACI_N_H
 #ifndef TRANSFORMACIONES_H
 #define TRANSFORMACIONES_H
 
@@ -12,4 +10,3 @@ void desplazarBitsIzquierda(unsigned char* imagen, unsigned char* resultado, int
 
 
 #endif // TRANSFORMACIONES_H
-#endif // TRANSFORMACI_N_H
