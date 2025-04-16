@@ -1,3 +1,7 @@
+#include <iostream>
+
+using namespace std;
+
 // Operaciones a nivel de bits (XOR)
 void aplicarXOR(unsigned char* imagen1, unsigned char* imagen2, unsigned char* resultado, int totalPixeles) {
     for (int i = 0; i < totalPixeles * 3; i++) {
