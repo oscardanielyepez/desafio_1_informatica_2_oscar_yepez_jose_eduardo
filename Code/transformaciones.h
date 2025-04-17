@@ -8,5 +8,12 @@ void rotarBitsIzquierda(unsigned char* imagen, unsigned char* resultado, int tot
 void desplazarBitsDerecha(unsigned char* imagen, unsigned char* resultado, int totalPixeles, int cantidadBits);
 void desplazarBitsIzquierda(unsigned char* imagen, unsigned char* resultado, int totalPixeles, int cantidadBits);
 
+//Enmascaramiento
+bool verificarEnmascaramiento(unsigned char* imagenTransformada, unsigned char* mascara,
+                              unsigned int* datosEnmascaramiento, int semilla,
+                              int anchoImagen, int altoImagen, int anchoMascara, int altoMascara);
+void aplicarEnmascaramiento(unsigned char* imagen, unsigned char* mascara,
+                             unsigned int* resultado, int semilla,
+                             int anchoImagen, int altoImagen, int anchoMascara, int altoMascara);
 
 #endif // TRANSFORMACIONES_H
