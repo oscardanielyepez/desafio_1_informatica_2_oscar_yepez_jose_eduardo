@@ -54,6 +54,7 @@ int main()
     // Variables para almacenar las dimensiones de la imagen
     int height = 0;
     int width = 0;
+    // Dimensiones de la mascara
     int heightM = 0;
     int widthM = 0;
 
@@ -64,7 +65,7 @@ int main()
     unsigned char* imagenTransformada = loadPixels(archivoTransformado, width, height);
 
     // Cargar la imagen de distorsión
-    int heightD = 0, widthD = 0;
+    int heightD = 0, widthD = 0; //Dimensiones
     unsigned char* imagenDistorsion = loadPixels(archivoDistorsion, widthD, heightD);
 
     // Cargar la máscara
