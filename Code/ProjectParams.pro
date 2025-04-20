@@ -1,5 +1,8 @@
 QT += core gui
 CONFIG += console c++17
 SOURCES += main.cpp \
-    verify.cpp
-HEADERS += transformaciones.h
+    bits.cpp \
+    transformacion.cpp \
+    mask.cpp
+HEADERS += \
+    funciones.h
