@@ -3,36 +3,36 @@
 using namespace std;
 
 // Operaciones a nivel de bits (XOR)
-void aplicarXOR(unsigned char* imagen1, unsigned char* imagen2, unsigned char* resultado, int totalPixeles) {
-    for (int i = 0; i < totalPixeles * 3; i++) {
-        resultado[i] = imagen1[i] ^ imagen2[i];
+void aplicarXOR(unsigned char* pixelData, unsigned char* mascara, unsigned char* resultado, int &numPixeles) {
+    for (int i = 0; i < numPixeles * 3; i++) {
+        resultado[i] = pixelData[i] ^ mascara[i];
     }
 }
 
 // Rotación de bits a la derecha
-void rotarBitsDerecha(unsigned char* imagen, unsigned char* resultado, int totalPixeles, int cantidadBits) {
-    for (int i = 0; i < totalPixeles * 3; i++) {
-        resultado[i] = (imagen[i] >> cantidadBits) | (imagen[i] << (8 - cantidadBits));
+void rotarBitsDerecha(unsigned char* pixelData, unsigned char* resultado, int &numPixeles, int parametrosTransformaciones) {
+    for (int i = 0; i < numPixeles * 3; i++) {
+        resultado[i] = (pixelData[i] >> parametrosTransformaciones) | (pixelData[i] << (8 - parametrosTransformaciones));
     }
 }
 
 // Rotación de bits a la izquierda
-void rotarBitsIzquierda(unsigned char* imagen, unsigned char* resultado, int totalPixeles, int cantidadBits) {
-    for (int i = 0; i < totalPixeles * 3; i++) {
-        resultado[i] = (imagen[i] << cantidadBits) | (imagen[i] >> (8 - cantidadBits));
+void rotarBitsIzquierda(unsigned char* pixelData, unsigned char* resultado, int &numPixeles, int parametrosTransformaciones) {
+    for (int i = 0; i < numPixeles * 3; i++) {
+        resultado[i] = (pixelData[i] << parametrosTransformaciones) | (pixelData[i] >> (8 - parametrosTransformaciones));
     }
 }
 
 // Desplazamiento de bits a la derecha
-void desplazarBitsDerecha(unsigned char* imagen, unsigned char* resultado, int totalPixeles, int cantidadBits) {
-    for (int i = 0; i < totalPixeles * 3; i++) {
-        resultado[i] = imagen[i] >> cantidadBits;
+void desplazarBitsDerecha(unsigned char* pixelData, unsigned char* resultado, int &numPixeles, int parametrosTransformaciones) {
+    for (int i = 0; i < numPixeles * 3; i++) {
+        resultado[i] = pixelData[i] >> parametrosTransformaciones;
     }
 }
 
 // Desplazamiento de bits a la izquierda
-void desplazarBitsIzquierda(unsigned char* imagen, unsigned char* resultado, int totalPixeles, int cantidadBits) {
-    for (int i = 0; i < totalPixeles * 3; i++) {
-        resultado[i] = imagen[i] << cantidadBits;
+void desplazarBitsIzquierda(unsigned char* pixelData, unsigned char* resultado, int &numPixeles, int parametrosTransformaciones) {
+    for (int i = 0; i < numPixeles * 3; i++) {
+        resultado[i] = pixelData[i] << parametrosTransformaciones;
     }
 }
