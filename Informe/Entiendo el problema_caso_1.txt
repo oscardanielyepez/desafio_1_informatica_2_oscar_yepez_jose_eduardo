@@ -1,0 +1,177 @@
+Del caso 1.
+
+I_D.bmp = imagen modificada
+I_M.bmp = Imagen intermedia, que no se sabe a que parte del proceso pertenece.
+I_O.bmp = imagen original
+M.bmp = 
+M0.txt = 
+M1.txt = 
+M2.txt = 
+P1.bmp = 
+P2.bmp = 
+
+----------------------------------
+Entiendo el problema:
+
+una imagen BMP de 24 bits fue sometida a una serie de transformaciones a
+nivel de bits, que incluyen desplazamientos, rotaciones y operaciones XOR
+
+con una imagen de
+distorsión generada aleatoriamente.
+
+¿En este caso que tipo de distorción aleatoriamente se le genero?
+
+Se entiende que se realizo 3 transformaciones a nivel bits:
+
+Desplazamientos: **********
+
+Son operaciones que mueven los bits de un número binario hacia la izquierda o hacia la derecha. En C/C++ se utilizan los operadores:
+
+<< (desplazamiento a la izquierda)
+
+>> (desplazamiento a la derecha)
+
+
+x << n: desplaza los bits de x n posiciones hacia la izquierda, rellenando con ceros por la derecha.
+
+unsigned int x = 3;  // binario: 0000 0011
+unsigned int r = x << 2;
+// Resultado: 0000 1100  (es 12)
+
+
+x >> n: desplaza los bits de x n posiciones hacia la derecha.
+
+unsigned int x = 8;  // binario: 0000 1000
+unsigned int r = x >> 2;
+// Resultado: 0000 0010  (es 2)
+
+¿Como determinamos que n, se desplazaron?
+
+Rotaciones: **********
+
+En una rotación, los bits que "salen" por un extremo vuelven a entrar por el otro. (donde los bits "desaparecen" y se rellenan con ceros)
+
+1. Rotación a la izquierda (Rotate Left / ROL):
+
+ROL(x, n)
+
+Se mueve cada bit de x n posiciones a la izquierda.
+
+Los bits más significativos que "salen" por la izquierda, se vuelven a insertar por la derecha.
+
+2. Rotación a la derecha (Rotate Right / ROR):
+
+ROR(x, n)
+
+Se mueve cada bit de x n posiciones a la derecha.
+
+Los bits menos significativos que "salen" por la derecha, se vuelven a insertar por la izquierda.
+
+¿Como saber que cantidad de n, se operaron?
+
+
+operaciones XOR: **********
+
+Es una operación lógica a nivel de bits.
+
+
+La tabla de verdad de XOR es:
+
+A	B	A ^ B
+0	0	0
+0	1	1
+1	0	1
+1	1	0
+
+
+Ej:
+
+char mensaje = 'A';   // ASCII 65 → 01000001
+char clave = 7;       // Decimal 7 → 00000111
+
+char cifrado = mensaje ^ clave;
+
+
+   01000001   (mensaje: 'A' → 65)
+^  00000111   (clave: 7)
+-----------
+   01000110   → Resultado: 70 ('F')
+
+¿Que valor tomara nuestra clave, y si ese valor sera obtenido de la mascara o bien de los archivos .txt?
+--------------------------------
+
+Tras cada una de ellas, se empleó una técnica de enmascaramiento que consistió
+en sumar una porción de la imagen transformada con una máscara de color.
+
+Que se entiende que seria M.bmp
+
+Es decir a cada valor de rgb de 
+I_O.bmp, en cada proceso de enmascaramiento.
+
+Un ejemplo de ello:
+
+// Suponiendo que ya tienes las imágenes cargadas en pixelData y maskData (ambas en RGB)
+
+
+Ejemplo de ello.
+// Sumar la máscara con la imagen transformada
+for (int i = 0; i < width * height * 3; i += 3) {
+    // Sumar los valores RGB de la imagen con los de la máscara
+    pixelData[i] = (pixelData[i] + maskData[i]) % 256;        // Rojo
+    pixelData[i + 1] = (pixelData[i + 1] + maskData[i + 1]) % 256;  // Verde
+    pixelData[i + 2] = (pixelData[i + 2] + maskData[i + 2]) % 256;  // Azul
+}
+
+¿Como sumamos estos pixeles, cuando M.bmp, se entiende que es menor que i_d?
+
+
+--------------------------------
+
+Como resultado, se obtuvo una imagen final altamente transformada, junto con varios archivos
+de rastreo (uno por cada transformación realizada). Estos archivos contienen la información
+resultante del enmascaramiento aplicado en cada etapa, y constituyen la única pista disponible
+para deducir el orden de las transformaciones y revertir sus efectos.
+
+Entendemos que al caso 1, se le aplico 3 transformaciones
+
+--------------------------------
+
+Este desafío simula un escenario de ingeniería inversa, en el que, con información limitada y sin
+conocer directamente el algoritmo completo ni el orden de los pasos aplicados, se debe
+reconstruir la imagen original utilizando lógica, deducción y habilidades de programación.
+
+--------------------------------
+
+Especificaciones:
+
+
+Una imagen ID de dimensiones m filas por n columnas, con tres canales (RGB), que
+representa el resultado final tras haber sido sometida a una serie de transformaciones a
+nivel de bits, aplicadas en un orden desconocido
+
+
+
+
+Una imagen IM, también de m filas por n columnas y tres canales (RGB), generada
+aleatoriamente, que pudo haber sido utilizada en una o varias ocasiones durante el
+proceso de transformación mediante operaciones XOR con versiones intermedias de ID.
+
+
+
+Una máscara M, de dimensiones i ≤ m filas y j ≤ n columnas, con tres canales (RGB),
+utilizada para aplicar un enmascaramiento después de cada transformación a nivel de
+bits. *Este enmascaramiento consiste en seleccionar aleatoriamente un píxel de
+desplazamiento s en la imagen transformada ID*, y a partir de este calcular las sumas:
+
+
+
+N archivos .txt, que contienen la información generada durante el enmascaramiento
+aplicado en cada etapa del proceso.
+
+Cada archivo incluye:
+o En la primera línea, un valor entero que representa el desplazamiento s utilizado
+para aplicar el enmascaramiento.
+o En las líneas siguientes, conjuntos de tres valores enteros que representan la suma
+de los canales RGB, píxel a píxel, entre una porción transformada de ID y la máscara
+M. La Figura 2 uno muestra un ejemplo de las primeras siete filas de un archivo
+resultado que almacena el resultado del enmascaramiento.

@@ -35,100 +35,31 @@
 #include <iostream>
 #include <QCoreApplication>
 #include <QImage>
-#include <funciones.h>
 
 using namespace std;
 unsigned char* loadPixels(QString input, int &width, int &height);
 bool exportImage(unsigned char* pixelData, int width,int height, QString archivoSalida);
-unsigned int* loadSeedMasking(const char* nombreArchivo, int &seed, int &numPixeles);
+unsigned int* loadSeedMasking(const char* nombreArchivo, int &seed, int &n_pixels);
 
 int main()
 {
     // Definición de rutas de archivo de entrada (imagen original) y salida (imagen modificada)
     QString archivoEntrada = "I_O.bmp";
     QString archivoSalida = "I_D.bmp";
-    QString archivoMascara = "M.bmp";
-    QString archivoTransformado = "P3.bmp";
-    QString archivoDistorsion = "I_M.bmp";
 
     // Variables para almacenar las dimensiones de la imagen
     int height = 0;
     int width = 0;
-    // Dimensiones de la mascara
-    int heightM = 0;
-    int widthM = 0;
 
     // Carga la imagen BMP en memoria dinámica y obtiene ancho y alto
     unsigned char *pixelData = loadPixels(archivoEntrada, width, height);
 
-    // Cargar la imagen transformada
-    unsigned char* imagenTransformada = loadPixels(archivoTransformado, width, height);
-
-    // Cargar la imagen de distorsión
-    int heightD = 0, widthD = 0; //Dimensiones
-    unsigned char* imagenDistorsion = loadPixels(archivoDistorsion, widthD, heightD);
-
-    // Cargar la máscara
-    unsigned char* mascara = loadPixels(archivoMascara, widthM, heightM);
-
-    // Contar cuántos archivos de enmascaramiento hay (los archivos.txt)
-    int numArchivos = 2; // Por ejemplo, si tienes M1.txt y M2.txt
-
-    // Arreglos para almacenar datos de todos los archivos de enmascaramiento
-    int* seed = new int[numArchivos];
-    int* numPixeles = new int[numArchivos];
-    unsigned int** maskingData = new unsigned int*[numArchivos];
-
-    // Cargar todos los archivos de enmascaramiento
-    char nombreArchivo[10];
-    for (int i = 0; i < numArchivos; i++) {
-        sprintf(nombreArchivo, "M%d.txt", i + 1);
-        maskingData[i] = loadSeedMasking(nombreArchivo, seed[i], numPixeles[i]);
-    }
-
-    // Arreglos para almacenar las transformaciones identificadas
-    int* tiposTransformaciones = new int[numArchivos];
-    int* parametrosTransformaciones = new int[numArchivos];
-
-    // Identificar las transformaciones
-    bool exito = identificarTransformaciones(
-        imagenTransformada, imagenDistorsion, mascara,
-        maskingData, seed, numArchivos,
-        width, height, widthM, heightM,
-        tiposTransformaciones, parametrosTransformaciones);
-
-    if (exito) {
-        cout << "¡Transformaciones identificadas con éxito!" << endl;
-
-    // Muestra en consola los primeros valores RGB leídos desde el archivo de enmascaramiento
-    for (int i = 0; i < numArchivos; i++) {
-        cout << "Transformación " << i + 1 << ": ";
-        switch (tiposTransformaciones[i]) {
-        case 1: cout << "XOR"; break;
-        case 2: cout << "Rotación derecha " << parametrosTransformaciones[i] << " bits"; break;
-        case 3: cout << "Rotación izquierda " << parametrosTransformaciones[i] << " bits"; break;
-        case 4: cout << "Desplazamiento derecha " << parametrosTransformaciones[i] << " bits"; break;
-        case 5: cout << "Desplazamiento izquierda " << parametrosTransformaciones[i] << " bits"; break;
-        }
-        cout << endl;
-    }
-
-    // Reconstruir la imagen original
-    unsigned char* imagenOriginal = new unsigned char[width * height * 3];
-    reconstruirImagenOriginal(
-        imagenTransformada, imagenDistorsion, imagenOriginal,
-        tiposTransformaciones, parametrosTransformaciones,
-        numArchivos, width * height);
-
-    // Verificar si los datos coinciden con el enmascaramiento de la imagen actual
-    bool coincide = verificarEnmascaramiento(imagenTransformada, mascara, maskingData[0],
-                                             seed[0], width, height, widthM, heightM);
-
-    if (coincide) {
-        cout << "¡Los datos de enmascaramiento coinciden con la imagen actual!" << endl;
-    } else {
-        cout << "Los datos de enmascaramiento NO coinciden con la imagen actual." << endl;
-        // Aquí es donde deberías probar diferentes transformaciones para encontrar la correcta
+    // Simula una modificación de la imagen asignando valores RGB incrementales
+    // (Esto es solo un ejemplo de manipulación artificial)
+    for (int i = 0; i < width * height * 3; i += 3) {
+        pixelData[i] = i;     // Canal rojo
+        pixelData[i + 1] = i; // Canal verde
+        pixelData[i + 2] = i; // Canal azul
     }
 
     // Exporta la imagen modificada a un nuevo archivo BMP
@@ -137,19 +68,24 @@ int main()
     // Muestra si la exportación fue exitosa (true o false)
     cout << exportI << endl;
 
-    delete[] imagenOriginal;
-    } else {
-        cout << "No se pudieron identificar todas las transformaciones." << endl;
-    }
-
     // Libera la memoria usada para los píxeles
-    delete[] seed;
-    delete[] numPixeles;
-    delete[] imagenTransformada;
-    delete[] imagenDistorsion;
-    delete[] mascara;
     delete[] pixelData;
     pixelData = nullptr;
+
+    // Variables para almacenar la semilla y el número de píxeles leídos del archivo de enmascaramiento
+    int seed = 0;
+    int n_pixels = 0;
+
+    // Carga los datos de enmascaramiento desde un archivo .txt (semilla + valores RGB)
+    unsigned int *maskingData = loadSeedMasking("M1.txt", seed, n_pixels);
+
+    // Muestra en consola los primeros valores RGB leídos desde el archivo de enmascaramiento
+    for (int i = 0; i < n_pixels * 3; i += 3) {
+        cout << "Pixel " << i / 3 << ": ("
+             << maskingData[i] << ", "
+             << maskingData[i + 1] << ", "
+             << maskingData[i + 2] << ")" << endl;
+    }
 
     // Libera la memoria usada para los datos de enmascaramiento
     if (maskingData != nullptr){
@@ -159,7 +95,6 @@ int main()
 
     return 0; // Fin del programa
 }
-
 
 unsigned char* loadPixels(QString input, int &width, int &height){
 /*
@@ -257,7 +192,7 @@ bool exportImage(unsigned char* pixelData, int width,int height, QString archivo
 
 }
 
-unsigned int* loadSeedMasking(const char* nombreArchivo, int &seed, int &numPixeles){
+unsigned int* loadSeedMasking(const char* nombreArchivo, int &seed, int &n_pixels){
 /*
  * @brief Carga la semilla y los resultados del enmascaramiento desde un archivo de texto.
  *
@@ -293,7 +228,7 @@ unsigned int* loadSeedMasking(const char* nombreArchivo, int &seed, int &numPixe
     // Contar cuántos grupos de valores RGB hay en el archivo
     // Se asume que cada línea después de la semilla tiene tres valores (r, g, b)
     while (archivo >> r >> g >> b) {
-        numPixeles++;  // Contamos la cantidad de píxeles
+        n_pixels++;  // Contamos la cantidad de píxeles
     }
 
     // Cerrar el archivo para volver a abrirlo desde el inicio
@@ -308,13 +243,13 @@ unsigned int* loadSeedMasking(const char* nombreArchivo, int &seed, int &numPixe
 
     // Reservar memoria dinámica para guardar todos los valores RGB
     // Cada píxel tiene 3 componentes: R, G y B
-    unsigned int* RGB = new unsigned int[numPixeles * 3];
+    unsigned int* RGB = new unsigned int[n_pixels * 3];
 
     // Leer nuevamente la semilla desde el archivo (se descarta su valor porque ya se cargó antes)
     archivo >> seed;
 
     // Leer y almacenar los valores RGB uno por uno en el arreglo dinámico
-    for (int i = 0; i < numPixeles * 3; i += 3) {
+    for (int i = 0; i < n_pixels * 3; i += 3) {
         archivo >> r >> g >> b;
         RGB[i] = r;
         RGB[i + 1] = g;
@@ -326,11 +261,12 @@ unsigned int* loadSeedMasking(const char* nombreArchivo, int &seed, int &numPixe
 
     // Mostrar información de control en consola
     cout << "Semilla: " << seed << endl;
-    cout << "Cantidad de píxeles leídos: " << numPixeles << endl;
+    cout << "Cantidad de píxeles leídos: " << n_pixels << endl;
 
     // Retornar el puntero al arreglo con los datos RGB
     return RGB;
 }
+
 
 
 
