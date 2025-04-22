@@ -3,7 +3,7 @@ Del caso 1.
 I_D.bmp = imagen modificada
 I_M.bmp = Imagen intermedia, que no se sabe a que parte del proceso pertenece.
 I_O.bmp = imagen original
-M.bmp = 
+M.bmp = Mascara
 M0.txt = 
 M1.txt = 
 M2.txt = 

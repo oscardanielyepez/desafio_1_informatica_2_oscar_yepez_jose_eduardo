@@ -1,0 +1,46 @@
+En este caso tenemos 3 transformaciones.
+
+Desplazamiento:
+
+Con respecto al desplazamiento tambien debemos tener en cuenta que tipo de desplazamiento se realizo, si a la derecha o bien a la izquierda.
+
+Que en este caso debemos tener los pixeles generales de la img a pasar o bien , 
+la mascara en pixeles para realizar la respectiva suma, teniendo en cuenta lo que nos plantea el problema:
+
+Tras cada una de ellas, se empleó una técnica de enmascaramiento que consistió
+en sumar una porción de la imagen transformada con una máscara de color.
+
+La vaina nos deberia ir quedando:
+
+Donde:
+unsigned char* pixelDataIMG = Va a ser igual a la cantidad de pixeles que le pasamos en un arreglo combinado o matriz
+unsigned char* pixelDataMascara = Va a ser igual a la cantidad de pixeles de la mascara que le pasamos en un arreglo combinado
+float tipoDesplazamiento = Debe ser igual a true o false, siendo true a la derecha y siendo false a la izquierda
+
+void SumarMascara () {
+
+}
+
+void AplicandoDesplazamiento (unsigned char* pixelDataIMG, float tipoDesplazamiento) {
+
+	if (tipoDesplazamiento == true){
+		// operaciones a nivel bit a pixelDataIMG, a la derecha.
+	} 
+	elseif (tipoDesplazamiento == false) {
+		// operaciones a nivel bit a pixelDataIMG, a la izquierda.
+	}
+
+	resultado_operaciones = SumarMascara()
+	
+}
+
+
+void AplicandoRotacion () {
+
+
+}
+
+
+void AplicandoXOR () {
+
+}
