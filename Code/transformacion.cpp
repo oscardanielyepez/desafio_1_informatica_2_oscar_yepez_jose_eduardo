@@ -35,24 +35,23 @@ bool identificarTransformaciones(
             transformacionIdentificada = true;
         }
 
-        // Si no fue XOR, probar rotación de bits (varios valores)
+        //Probar desplazamiento de bits
         if (!transformacionIdentificada) {
             for (int bits = 1; bits <= 7; bits++) {
-                // Probar rotación a la derecha
-                rotarBitsDerecha(imagenTransformada, resultado, numPixeles, bits);
-                if (verificarEnmascaramiento(resultado, mascara, maskingData[paso],
-                                             seed[paso], width, height, widthM, heightM)) {
-                    tiposTransformaciones[paso] = 2; // 2 = Rotación derecha
-                    parametrosTransformaciones[paso] = bits;
-                    transformacionIdentificada = true;
-                    break;
-                }
-
                 // Probar rotación a la izquierda
                 rotarBitsIzquierda(imagenTransformada, resultado, numPixeles, bits);
                 if (verificarEnmascaramiento(resultado, mascara, maskingData[paso],
                                              seed[paso], width, height, widthM, heightM)) {
-                    tiposTransformaciones[paso] = 3; // 3 = Rotación izquierda
+                    tiposTransformaciones[paso] = 2; // 2 = Rotación izquierda
+                    parametrosTransformaciones[paso] = bits;
+                    transformacionIdentificada = true;
+                    break;
+                }
+                // Probar rotación a la derecha
+                rotarBitsDerecha(imagenTransformada, resultado, numPixeles, bits);
+                if (verificarEnmascaramiento(resultado, mascara, maskingData[paso],
+                                             seed[paso], width, height, widthM, heightM)) {
+                    tiposTransformaciones[paso] = 3; // 3 = Rotación derecha
                     parametrosTransformaciones[paso] = bits;
                     transformacionIdentificada = true;
                     break;
@@ -60,10 +59,29 @@ bool identificarTransformaciones(
             }
         }
 
-        // Probar desplazamientos de bits si no se ha identificado aún
+        // Si no fue XOR, probar rotación de bits (varios valores)
         if (!transformacionIdentificada) {
-            // Implementar pruebas para desplazamientos...
-            // Similar a las rotaciones, prueba diferentes valores
+            for (int bits = 1; bits <= 7; bits++) {
+                // Probar desplazamiento a la derecha
+                desplazarBitsDerecha(imagenTransformada, resultado, numPixeles, bits);
+                if (verificarEnmascaramiento(resultado, mascara, maskingData[paso],
+                                             seed[paso], width, height, widthM, heightM)) {
+                    tiposTransformaciones[paso] = 4; // 4 = Desplazamiento derecha
+                    parametrosTransformaciones[paso] = bits;
+                    transformacionIdentificada = true;
+                    break;
+                }
+
+                // Probar desplazamiento a la izquierda
+                desplazarBitsIzquierda(imagenTransformada, resultado, numPixeles, bits);
+                if (verificarEnmascaramiento(resultado, mascara, maskingData[paso],
+                                             seed[paso], width, height, widthM, heightM)) {
+                    tiposTransformaciones[paso] = 5; // 5 = Desplazamiento izquierda
+                    parametrosTransformaciones[paso] = bits;
+                    transformacionIdentificada = true;
+                    break;
+                }
+            }
         }
 
         // Si no se identificó ninguna transformación, fallar

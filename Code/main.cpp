@@ -44,12 +44,13 @@ unsigned int* loadSeedMasking(const char* nombreArchivo, int &seed, int &numPixe
 
 int main()
 {
-    // Definición de rutas de archivo de entrada (imagen original) y salida (imagen modificada)
-    QString archivoEntrada = "I_O.bmp";
-    QString archivoSalida = "I_D.bmp";
-    QString archivoMascara = "M.bmp";
-    QString archivoTransformado = "P3.bmp";
-    QString archivoDistorsion = "I_M.bmp";
+    // Definición de rutas de archivo de entrada, salida, mascara, imagen transformada y distorsionada
+    //NOTA: ingresar rutas manualmente hacia los archivos .bmp
+    QString archivoEntrada = //"../Caso_2/I_O.bmp";
+    QString archivoSalida = //"../Caso_2/I_D.bmp";
+    QString archivoMascara = //"../Caso_2/M.bmp";
+    QString archivoTransformado = //"../Caso_2/P3.bmp";
+    QString archivoDistorsion = //"../Caso_2/I_M.bmp";
 
     // Variables para almacenar las dimensiones de la imagen
     int height = 0;
@@ -72,7 +73,7 @@ int main()
     unsigned char* mascara = loadPixels(archivoMascara, widthM, heightM);
 
     // Contar cuántos archivos de enmascaramiento hay (los archivos.txt)
-    int numArchivos = 2; // Por ejemplo, si tienes M1.txt y M2.txt
+    int numArchivos = 7; // Por ejemplo, si tienes M1.txt y M2.txt
 
     // Arreglos para almacenar datos de todos los archivos de enmascaramiento
     int* seed = new int[numArchivos];
@@ -80,9 +81,9 @@ int main()
     unsigned int** maskingData = new unsigned int*[numArchivos];
 
     // Cargar todos los archivos de enmascaramiento
-    char nombreArchivo[10];
+    char nombreArchivo[200]; //Modificar si es necesario según la cantidad de caracteres de la ruta
     for (int i = 0; i < numArchivos; i++) {
-        sprintf(nombreArchivo, "M%d.txt", i + 1);
+        sprintf(nombreArchivo, "../Caso_2/M%d.txt", i); //NOTA: Ingresar manualmente (ruta hacia los archivos .txt)/M%d.txt
         maskingData[i] = loadSeedMasking(nombreArchivo, seed[i], numPixeles[i]);
     }
 
@@ -276,7 +277,7 @@ unsigned int* loadSeedMasking(const char* nombreArchivo, int &seed, int &numPixe
  *
  * @note Es responsabilidad del usuario liberar la memoria reservada con delete[].
  */
-
+    numPixeles = 0;
     // Abrir el archivo que contiene la semilla y los valores RGB
     ifstream archivo(nombreArchivo);
     if (!archivo.is_open()) {
@@ -331,16 +332,3 @@ unsigned int* loadSeedMasking(const char* nombreArchivo, int &seed, int &numPixe
     // Retornar el puntero al arreglo con los datos RGB
     return RGB;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
