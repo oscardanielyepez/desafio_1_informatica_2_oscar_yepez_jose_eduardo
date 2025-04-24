@@ -72,7 +72,7 @@ int main()
     unsigned char* mascara = loadPixels(archivoMascara, widthM, heightM);
 
     // Contar cuántos archivos de enmascaramiento hay (los archivos.txt)
-    int numArchivos = 2; // Por ejemplo, si tienes M1.txt y M2.txt
+    int numArchivos = 7; // Por ejemplo, si tienes M1.txt y M2.txt
 
     // Arreglos para almacenar datos de todos los archivos de enmascaramiento
     int* seed = new int[numArchivos];
@@ -80,9 +80,9 @@ int main()
     unsigned int** maskingData = new unsigned int*[numArchivos];
 
     // Cargar todos los archivos de enmascaramiento
-    char nombreArchivo[10];
+    char nombreArchivo[200]; // Increase buffer size to accommodate longer paths
     for (int i = 0; i < numArchivos; i++) {
-        sprintf(nombreArchivo, "M%d.txt", i + 1);
+        sprintf(nombreArchivo, "C:/Users/eeval/Desktop/informatica ii/GitHub/desafio_1_informatica_2_oscar_yepez_jose_eduardo/Caso_2/M%d.txt", i);
         maskingData[i] = loadSeedMasking(nombreArchivo, seed[i], numPixeles[i]);
     }
 
@@ -276,7 +276,7 @@ unsigned int* loadSeedMasking(const char* nombreArchivo, int &seed, int &numPixe
  *
  * @note Es responsabilidad del usuario liberar la memoria reservada con delete[].
  */
-
+    numPixeles = 0;
     // Abrir el archivo que contiene la semilla y los valores RGB
     ifstream archivo(nombreArchivo);
     if (!archivo.is_open()) {
@@ -331,16 +331,3 @@ unsigned int* loadSeedMasking(const char* nombreArchivo, int &seed, int &numPixe
     // Retornar el puntero al arreglo con los datos RGB
     return RGB;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
