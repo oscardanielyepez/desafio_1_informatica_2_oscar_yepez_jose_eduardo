@@ -44,12 +44,13 @@ unsigned int* loadSeedMasking(const char* nombreArchivo, int &seed, int &numPixe
 
 int main()
 {
-    // Definición de rutas de archivo de entrada (imagen original) y salida (imagen modificada)
-    QString archivoEntrada = "I_O.bmp";
-    QString archivoSalida = "I_D.bmp";
-    QString archivoMascara = "M.bmp";
-    QString archivoTransformado = "P3.bmp";
-    QString archivoDistorsion = "I_M.bmp";
+    // Definición de rutas de archivo de entrada, salida, mascara, imagen transformada y distorsionada
+    //NOTA: ingresar rutas manualmente hacia los archivos .bmp
+    QString archivoEntrada = //"../Caso_2/I_O.bmp";
+    QString archivoSalida = //"../Caso_2/I_D.bmp";
+    QString archivoMascara = //"../Caso_2/M.bmp";
+    QString archivoTransformado = //"../Caso_2/P3.bmp";
+    QString archivoDistorsion = //"../Caso_2/I_M.bmp";
 
     // Variables para almacenar las dimensiones de la imagen
     int height = 0;
@@ -80,9 +81,9 @@ int main()
     unsigned int** maskingData = new unsigned int*[numArchivos];
 
     // Cargar todos los archivos de enmascaramiento
-    char nombreArchivo[200]; // Increase buffer size to accommodate longer paths
+    char nombreArchivo[200]; //Modificar si es necesario según la cantidad de caracteres de la ruta
     for (int i = 0; i < numArchivos; i++) {
-        sprintf(nombreArchivo, "C:/Users/eeval/Desktop/informatica ii/GitHub/desafio_1_informatica_2_oscar_yepez_jose_eduardo/Caso_2/M%d.txt", i);
+        sprintf(nombreArchivo, "../Caso_2/M%d.txt", i); //NOTA: Ingresar manualmente (ruta hacia los archivos .txt)/M%d.txt
         maskingData[i] = loadSeedMasking(nombreArchivo, seed[i], numPixeles[i]);
     }
 
