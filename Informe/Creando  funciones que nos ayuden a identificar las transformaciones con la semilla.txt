@@ -1,0 +1,17 @@
+En este caso necesitamos una funcion que reciba la lectura de los archivos
+// Carga los datos de enmascaramiento desde un archivo .txt (semilla + valores RGB)
+    unsigned int *maskingData = loadSeedMasking("M1.txt", seed, n_pixels);
+, .txt, y de acuerdo a ello nos ayude a determinar que tipo de transformaciones se realizaron, de acuerdo a la lectura de las semillas, 
+
+No puedo determinar si hacelos en un while donde me lea ultima tranformación, y me le aplique de una vez el proceso inverso, y asi con cada archivo hasta llegar a la img original, o bien pasarlos todos archivos de una vez y que nos almancen en un arreglo de tipo diccionario como python que proceso se hizo, Ej:
+
+transformacioes_realizadas = { "M1.txt": Desplazamiento << o >>", "M0.txt": Rotaciones n", "M2.txt": "XOR"}
+
+
+void identificar_Transformaciones () {
+    //
+}
+
+Por el momento tenemos en cuenta que debemos pasarle la semilla, de acuerdo a la lectura de la funcion *maskingData.
+
+La im

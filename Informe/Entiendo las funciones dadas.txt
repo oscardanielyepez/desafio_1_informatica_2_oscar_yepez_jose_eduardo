@@ -1,0 +1,8 @@
+En este caso se nos entregan 3 funciones:
+
+unsigned char* loadPixels(QString input, int &width, int &height);
+bool exportImage(unsigned char* pixelData, int width,int height, QString archivoSalida);
+unsigned int* loadSeedMasking(const char* nombreArchivo, int &seed, int &n_pixels);
+
+
+Mas la main(), que se entiende que ejecuta el programa de forma secuecial

@@ -21,6 +21,15 @@ void SumarMascara () {
 
 }
 
+// Se nos indica que en este caso, la suma de la mascara es:
+
+Cada archivo incluye:
+o En la primera línea, un valor entero que representa el desplazamiento s utilizado
+para aplicar el enmascaramiento.
+o En las líneas siguientes, conjuntos de tres valores enteros que representan la suma
+de los canales RGB, píxel a píxel, entre una porción transformada de ID y la máscara
+M.
+
 void AplicandoDesplazamiento (unsigned char* pixelDataIMG, float tipoDesplazamiento) {
 
 	if (tipoDesplazamiento == true){

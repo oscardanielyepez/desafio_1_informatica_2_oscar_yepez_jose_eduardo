@@ -134,6 +134,9 @@ para deducir el orden de las transformaciones y revertir sus efectos.
 
 Entendemos que al caso 1, se le aplico 3 transformaciones
 
+En este caso tenemos unos archivos que nos mostraran l proceso, el cual debemos leer, para determinar el orden en que se realizaron las transformaciones.
+Se logra entender que estas se deben leer al contrario para llegar a la img original, 
+
 --------------------------------
 
 Este desafío simula un escenario de ingeniería inversa, en el que, con información limitada y sin
