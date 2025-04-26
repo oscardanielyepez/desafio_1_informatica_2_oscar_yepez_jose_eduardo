@@ -35,7 +35,8 @@ bool identificarTransformaciones(
             transformacionIdentificada = true;
         }
 
-        //Probar desplazamiento de bits
+        // Probar rotaciones de bits - Con esta evitamos una confusion.
+        // Probar desplazamiento de bits
         if (!transformacionIdentificada) {
             for (int bits = 1; bits <= 7; bits++) {
                 // Probar rotación a la izquierda
