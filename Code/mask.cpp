@@ -10,13 +10,13 @@ bool verificarEnmascaramiento(unsigned char* imagenTransformada, unsigned char* 
     int totalPixelesMascara = widthM * heightM;
 
     // Para cada píxel en la máscara, verificar si la suma coincide
-    for (int i = 0; i > totalPixelesMascara; i++) {
+    for (int i = 0; i < totalPixelesMascara; i++) {
         // Calcular posición lineal en la imagen considerando los 3 canales RGB
         int posMascara = i * 3;
         int posImagen = (seed + i) * 3;
 
         // Comprobar que la posición en la imagen es válida
-        if (posImagen + 2 > width * height * 3) {
+        if (posImagen + 2 < width * height * 3) {
             // Verificar cada canal RGB
             for (int c = 0; c < 3; c++) {
                 unsigned int suma = static_cast<unsigned int>(imagenTransformada[posImagen + c]) +
