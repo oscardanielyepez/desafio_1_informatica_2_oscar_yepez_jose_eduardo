@@ -62,51 +62,15 @@ int main()
     // Carga la imagen BMP en memoria dinámica y obtiene ancho y alto
     unsigned char *pixelData = loadPixels(archivoEntrada, width, height);
 
-    // Añadimos comprobaciones, de estos datos esperados, sino: nos debe imprime un mensaje de error, liberado lo que ya habías reservado y sale con return 1;.
-    if (!pixelData) {
-        std::cerr << "Error: no se pudo cargar la imagen de entrada '"
-                  << archivoEntrada.toStdString() << "'\n";
-        return 1;
-    }
-
     // Cargar la imagen transformada
     unsigned char* imagenTransformada = loadPixels(archivoTransformado, width, height);
-
-    // Añadimos comprobaciones, de estos datos esperados, sino: nos debe imprime un mensaje de error, liberado lo que ya habías reservado y sale con return 1;.
-    if (!imagenTransformada)
-    {
-        std::cerr << "Error: no se pudo cargar la imagen transformada '"
-                  << archivoTransformado.toStdString() << "'\n";
-        delete[] pixelData;
-        return 1;
-    }
 
     // Cargar la imagen de distorsión
     int heightD = 0, widthD = 0; //Dimensiones
     unsigned char* imagenDistorsion = loadPixels(archivoDistorsion, widthD, heightD);
 
-    // Añadimos comprobaciones, de estos datos esperados, sino: nos debe imprime un mensaje de error, liberado lo que ya habías reservado y sale con return 1;.
-    if (!imagenDistorsion)
-    {
-        std::cerr << "Error: no se pudo cargar la imagen de distorsión '"
-                  << archivoDistorsion.toStdString() << "'\n";
-        delete[] pixelData;
-        delete[] imagenTransformada;
-        return 1;
-    }
-
     // Cargar la máscara
     unsigned char* mascara = loadPixels(archivoMascara, widthM, heightM);
-
-    // Añadimos comprobaciones, de estos datos esperados, sino: nos debe imprime un mensaje de error, liberado lo que ya habías reservado y sale con return 1;.
-    if (!mascara) {
-        std::cerr << "Error: no se pudo cargar la máscara '"
-                  << archivoMascara.toStdString() << "'\n";
-        delete[] pixelData;
-        delete[] imagenTransformada;
-        delete[] imagenDistorsion;
-        return 1;
-    }
 
     // Contar cuántos archivos de enmascaramiento hay (los archivos.txt)
     int numArchivos = 7; // Por ejemplo, si tienes M1.txt y M2.txt
@@ -115,47 +79,12 @@ int main()
     int* seed = new int[numArchivos];
     int* numPixeles = new int[numArchivos];
     unsigned int** maskingData = new unsigned int*[numArchivos];
-/*
+
     // Cargar todos los archivos de enmascaramiento
     char nombreArchivo[200]; //Modificar si es necesario según la cantidad de caracteres de la ruta
     for (int i = 0; i < numArchivos; i++) {
         sprintf(nombreArchivo, "../Caso_2/M%d.txt", i); //NOTA: Ingresar manualmente (ruta hacia los archivos .txt)/M%d.txt
         maskingData[i] = loadSeedMasking(nombreArchivo, seed[i], numPixeles[i]);
-    }
-*/
-    //Aseguramos de que si alguno de los .txt falla al cargar, no sigue adelante y liberas toda la memoria correctamente.
-    // Cargar todos los archivos de enmascaramiento
-    char nombreArchivo[200];
-    for (int i = 0; i < numArchivos; i++)
-    {
-        sprintf(nombreArchivo, "../Caso_2/M%d.txt", i);
-        maskingData[i] = loadSeedMasking(nombreArchivo, seed[i], numPixeles[i]);
-
-        // ← Aquí insertas el chequeo tras cada carga
-        if (!maskingData[i])
-        {
-            std::cerr << "Error: no se pudo cargar maskingData[" << i
-                      << "] desde '" << nombreArchivo << "'\n";
-
-            // 1) liberar cada bloque ya leído
-            for (int j = 0; j < i; ++j)
-            {
-                delete[] maskingData[j];
-            }
-            // 2) liberar el array de punteros
-            delete[] maskingData;
-            // 3) liberar semillas y contador de pixels
-            delete[] seed;
-            delete[] numPixeles;
-            // 4) liberar imágenes ya cargadas
-            delete[] pixelData;
-            delete[] imagenTransformada;
-            delete[] imagenDistorsion;
-            delete[] mascara;
-
-            return 1;
-        }
-        // ↑ Fin del bloque de comprobación
     }
 
     // Arreglos para almacenar las transformaciones identificadas
@@ -185,7 +114,6 @@ int main()
         cout << endl;
     }
 
-
     // Reconstruir la imagen original
     unsigned char* imagenOriginal = new unsigned char[width * height * 3];
     reconstruirImagenOriginal(
@@ -193,15 +121,8 @@ int main()
         tiposTransformaciones, parametrosTransformaciones,
         numArchivos, width * height);
 
-//Estamos corrigiendo la llamada de la función.
-/*
     // Verificar si los datos coinciden con el enmascaramiento de la imagen actual
     bool coincide = verificarEnmascaramiento(imagenTransformada, mascara, maskingData[0],
-                                             seed[0], width, height, widthM, heightM);
-*/
-    // Para ver si quedo reconstruida.
-    // Verificar enmascaramiento de la imagen RECONSTRUIDA
-    bool coincide = verificarEnmascaramiento(imagenOriginal, mascara, maskingData[0],
                                              seed[0], width, height, widthM, heightM);
 
     if (coincide) {
@@ -231,8 +152,6 @@ int main()
     delete[] pixelData;
     pixelData = nullptr;
 
-    //Este es el codigo anterior que utilizabamos para liberar la memoria.
-    /*
     // Libera la memoria usada para los datos de enmascaramiento
     if (maskingData != nullptr){
         delete[] maskingData;
@@ -241,18 +160,7 @@ int main()
 
     return 0; // Fin del programa
 }
-*/
-    //Probando nuevo codigo, para sln, la identificación de las transformaciones.
-    // Libera la memoria usada para los datos de enmascaramiento
-    if (maskingData != nullptr)
-    {
-        for (int i = 0; i < numArchivos; ++i)
-        {
-            delete[] maskingData[i]; // Primero libera cada array individual
-        }
-        delete[] maskingData; // Luego libera el array de punteros
-        maskingData = nullptr;
-    }
+
 
 unsigned char* loadPixels(QString input, int &width, int &height){
 /*

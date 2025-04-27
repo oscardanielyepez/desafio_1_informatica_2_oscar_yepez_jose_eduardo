@@ -35,8 +35,7 @@ bool identificarTransformaciones(
             transformacionIdentificada = true;
         }
 
-        // Probar rotaciones de bits - Con esta evitamos una confusion.
-        // Probar desplazamiento de bits
+        //Probar desplazamiento de bits
         if (!transformacionIdentificada) {
             for (int bits = 1; bits <= 7; bits++) {
                 // Probar rotación a la izquierda
@@ -153,3 +152,13 @@ void reconstruirImagenOriginal(
     // Liberar memoria
     delete[] imagenTemporal;
 }
+
+/*
+    switch (tiposTransformaciones[i]) {
+        case 1: aplicarXOR(...); break;
+        case 2: rotarBitsIzquierda(...); break;
+        case 3: rotarBitsDerecha(...); break;
+        case 4: desplazarBitsIzquierda(...); break;
+        case 5: desplazarBitsDerecha(...); break;
+        }
+*/
