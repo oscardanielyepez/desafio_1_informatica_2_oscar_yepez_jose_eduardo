@@ -49,7 +49,6 @@ int main()
     QString archivoEntrada = //"../Caso_2/I_O.bmp";
     QString archivoSalida = //"../Caso_2/I_D.bmp";
     QString archivoMascara = //"../Caso_2/M.bmp";
-    QString archivoTransformado = //"../Caso_2/P3.bmp";
     QString archivoDistorsion = //"../Caso_2/I_M.bmp";
 
     // Variables para almacenar las dimensiones de la imagen
@@ -69,7 +68,12 @@ int main()
     int heightD = 0, widthD = 0; //Dimensiones
     unsigned char* imagenDistorsion = loadPixels(archivoDistorsion, widthD, heightD);
 
-    // Cargar la máscara
+    //Variable para creacion "imaginaria" de la transformacion de la imagen durante el proceso de cambios en los bits utilizando arreglos
+    unsigned char* imagenTransformada = new unsigned char[width * height * 3];
+    for (int i = 0; i < width * height * 3; i++) {
+        imagenTransformada[i] = 0;  // Inicializa con valores predeterminados
+    }
+
     unsigned char* mascara = loadPixels(archivoMascara, widthM, heightM);
 
     // Contar cuántos archivos de enmascaramiento hay (los archivos.txt)
