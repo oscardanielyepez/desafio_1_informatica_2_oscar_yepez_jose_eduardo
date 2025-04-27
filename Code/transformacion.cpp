@@ -153,13 +153,3 @@ void reconstruirImagenOriginal(
     // Liberar memoria
     delete[] imagenTemporal;
 }
-
-/*
-    switch (tiposTransformaciones[i]) {
-        case 1: aplicarXOR(...); break;
-        case 2: rotarBitsIzquierda(...); break;
-        case 3: rotarBitsDerecha(...); break;
-        case 4: desplazarBitsIzquierda(...); break;
-        case 5: desplazarBitsDerecha(...); break;
-        }
-*/
